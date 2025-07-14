@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Webhook Events</title>
+  <style>
+    body { font-family: Arial; padding: 40px; background: #f9f9f9; }
+    ul { list-style-type: none; padding: 0; }
+    li { background: #fff; padding: 10px; margin-bottom: 10px; border-left: 5px solid #007acc; }
+    h2 { color: #333; }
+  </style>
+</head>
+<body>
+  <h2>Latest GitHub Events</h2>
+  <ul id="eventList"></ul>
+
+  <script>
+    async function fetchEvents() {
+      const res = await fetch('/events');
+      const data = await res.json();
+      const list = document.getElementById('eventList');
+      list.innerHTML = "";
+      data.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        list.appendChild(li);
+      });
+    }
+
+    fetchEvents();
+    setInterval(fetchEvents, 15000);
+  </script>
+</body>
+</html>
